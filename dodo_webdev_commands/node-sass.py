@@ -35,10 +35,11 @@ class Command(DodoCommand):  # noqa
             ] + nodesass_args
         )
 
-        self.runcmd(
-            [
-                nodesass,
-                self.get_config("/SASS/src_file"),
-                self.get_config("/SASS/output_file")
-            ] + nodesass_args + (["-w"] if watch else [])
-        )
+        if watch:
+            self.runcmd(
+                [
+                    nodesass,
+                    self.get_config("/SASS/src_file"),
+                    self.get_config("/SASS/output_file")
+                ] + nodesass_args + ["-w"]
+            )

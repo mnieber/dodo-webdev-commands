@@ -1,1 +1,4 @@
 *.pyc
+dist/
+dodo_webdev_commands.egg-info/
+

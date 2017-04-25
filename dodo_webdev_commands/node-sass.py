@@ -10,6 +10,18 @@ class Command(DodoCommand):  # noqa
         '--name=node-sass',
     ]
 
+    def _cmd_str(self, args):
+        nodesass = self.get_config("/SASS/nodesass", "node-sass")
+        cmds = []
+        for src_file, output_file in self.get_config("/SASS/src_map").items():
+            cmds.append("{nodesass} {src_file} {output_file} {args}".format(
+                nodesass=nodesass,
+                src_file=src_file,
+                output_file=output_file,
+                args=" ".join(args)
+            ))
+        return " & ".join(cmds)
+
     def add_arguments_imp(self, parser):  # noqa
         parser.add_argument('--watch', action="store_true")
         parser.add_argument(
@@ -18,28 +30,15 @@ class Command(DodoCommand):  # noqa
         )
 
     def handle_imp(self, watch, nodesass_args, **kwargs):  # noqa
-        nodesass = self.get_config("/SASS/nodesass", "node-sass")
-        self.runcmd(
-            [
-                "mkdir",
-                "-p",
-                os.path.dirname(self.get_config("/SASS/output_file"))
-            ]
-        )
-
-        self.runcmd(
-            [
-                nodesass,
-                self.get_config("/SASS/src_file"),
-                self.get_config("/SASS/output_file")
-            ] + nodesass_args
-        )
-
-        if watch:
+        for src_file, output_file in self.get_config("/SASS/src_map").items():
             self.runcmd(
                 [
-                    nodesass,
-                    self.get_config("/SASS/src_file"),
-                    self.get_config("/SASS/output_file")
-                ] + nodesass_args + ["-w"]
+                    "mkdir",
+                    "-p",
+                    os.path.dirname(output_file)
+                ]
             )
+
+        self.runcmd(["/bin/bash", "-c", self._cmd_str(nodesass_args)])
+        if watch:
+            self.runcmd(["/bin/bash", "-c", self._cmd_str(nodesass_args + ['-w'])])

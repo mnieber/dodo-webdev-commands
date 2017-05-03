@@ -1,6 +1,7 @@
 # noqa
 import argparse
 from dodo_commands.system_commands import DodoCommand
+from dodo_commands.framework.util import remove_trailing_dashes
 
 class Command(DodoCommand):  # noqa
     help = ""
@@ -30,6 +31,6 @@ class Command(DodoCommand):  # noqa
                 autoless,
                 ".",
                 self.get_config("/LESS/output_dir")
-            ] + autoless_args,
+            ] + remove_trailing_dashes(autoless_args),
             cwd=self.get_config("/LESS/src_dir")
         )

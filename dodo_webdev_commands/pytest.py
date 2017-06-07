@@ -20,7 +20,10 @@ class Command(DodoCommand):  # noqa
     def handle_imp(self, pytest_args, **kwargs):  # noqa
         self.runcmd(
             [
-                self.get_config("/PYTEST/pytest"),
+                self.get_config("/PYTEST/pytest", "pytest"),
             ] + remove_trailing_dashes(pytest_args),
-            cwd=self.get_config("/PYTEST/src_dir")
+            cwd=self.get_config(
+                "/PYTEST/src_dir",
+                self.get_config("/ROOT/src_dir")
+            )
         )

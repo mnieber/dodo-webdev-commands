@@ -5,7 +5,6 @@ import os
 
 class Command(DodoCommand):  # noqa
     help = ""
-    decorators = ['docker']
     docker_options = [
         '--name=node-sass',
     ]

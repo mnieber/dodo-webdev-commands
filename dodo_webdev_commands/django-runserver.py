@@ -5,7 +5,6 @@ from dodo_commands.framework.util import remove_trailing_dashes
 
 
 class Command(DodoCommand):  # noqa
-    decorators = ['docker']
     docker_options = [
         '-p=8000:8000',
         '--name=django-runserver',

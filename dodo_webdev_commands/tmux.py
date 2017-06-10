@@ -5,7 +5,6 @@ import os
 
 class Command(DodoCommand):  # noqa
     help = ""
-    decorators = []
 
     def handle_imp(self, **kwargs):  # noqa
         default_script = os.path.join(

@@ -5,7 +5,6 @@ from dodo_commands.framework.util import remove_trailing_dashes
 
 class Command(DodoCommand):  # noqa
     help = ""
-    decorators = ['docker']
     docker_options = [
         '--name=autoless',
     ]

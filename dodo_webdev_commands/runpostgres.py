@@ -4,7 +4,6 @@ from dodo_commands.extra.standard_commands import DodoCommand
 
 class Command(DodoCommand):  # noqa
     help = ""
-    decorators = ["docker"]
     docker_options = [
         '--name=pg',
     ]

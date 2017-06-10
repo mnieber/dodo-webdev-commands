@@ -5,7 +5,6 @@ from plumbum.cmd import docker
 
 class Command(DodoCommand):  # noqa
     help = ""
-    decorators = []
 
     def add_arguments_imp(self, parser):  # noqa
         parser.add_argument('--playbook')

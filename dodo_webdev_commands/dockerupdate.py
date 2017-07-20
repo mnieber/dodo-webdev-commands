@@ -9,6 +9,7 @@ class Command(DodoCommand):  # noqa
     def add_arguments_imp(self, parser):  # noqa
         parser.add_argument('--playbook')
         parser.add_argument('--input-image')
+        parser.add_argument('--tags')
 
     def _playbook(self, playbook):
         return playbook or self.get_config("/ANSIBLE/default_playbook")
@@ -34,7 +35,10 @@ class Command(DodoCommand):  # noqa
         if not result:
             raise CommandError("Cannot find image %s" % input_image_name)
 
-    def handle_imp(self, playbook, input_image, **kwargs):  # noqa
+    def _tags(self, tags):
+        return "--tags=%s" % tags if tags else ""
+
+    def handle_imp(self, playbook, input_image, tags, **kwargs):  # noqa
         self._check_existing_image(input_image)
         self.runcmd(
             [
@@ -45,7 +49,10 @@ class Command(DodoCommand):  # noqa
                 self._input_image_name(input_image),
                 "/bin/bash",
                 "-c",
-                "ansible-playbook -i hosts -l localhost %s" % self._playbook(playbook)
+                "ansible-playbook -i hosts -l localhost %s %s" % (
+                    self._playbook(playbook),
+                    self._tags(tags)
+                )
             ]
         )
 

@@ -6,7 +6,7 @@ import os
 class Command(DodoCommand):  # noqa
     help = ""
     docker_options = [
-        '--name=node-sass',
+        ('name', 'node-sass'),
     ]
 
     def _cmd_str(self, args):

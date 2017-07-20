@@ -6,7 +6,7 @@ from dodo_commands.framework.util import remove_trailing_dashes
 
 class Command(DodoCommand):  # noqa
     docker_options = [
-        '--name=webpack',
+        ('name', 'webpack'),
     ]
 
     def add_arguments_imp(self, parser):  # noqa

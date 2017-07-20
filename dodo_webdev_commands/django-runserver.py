@@ -6,8 +6,8 @@ from dodo_commands.framework.util import remove_trailing_dashes
 
 class Command(DodoCommand):  # noqa
     docker_options = [
-        '-p=8000:8000',
-        '--name=django-runserver',
+        ('name', 'django-runserver'),
+        ('publish', '8000:8000'),
     ]
 
     def add_arguments_imp(self, parser):  # noqa

@@ -7,7 +7,7 @@ from dodo_commands.framework.util import remove_trailing_dashes
 class Command(DodoCommand):  # noqa
     help = ""
     docker_options = [
-        '--name=pytest',
+        ('name', 'pytest'),
     ]
 
     def add_arguments_imp(self, parser):  # noqa

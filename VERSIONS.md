@@ -1,5 +1,13 @@
 # Version history
 
+## 0.5.0
+
+- Update to the new /DOCKER/options format
+
+## 0.4.0
+
+- Remove list of decorators from the DodoCommand class
+
 ## 0.3.0
 
 - Add commands: ansible-playbook, dockerupdate, runpostgres, runserver

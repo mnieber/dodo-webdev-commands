@@ -28,7 +28,7 @@ class Command(DodoCommand):  # noqa
         return "/root/ansible/"
 
     def _tags(self, tags):
-        return "--tags=%s" % tags if tags else ""
+        return ["--tags=%s" % tags] if tags else []
 
     def handle_imp(self, playbook, tags, **kwargs):  # noqa
         self.docker_options.append(
@@ -40,9 +40,9 @@ class Command(DodoCommand):  # noqa
                 "ansible-playbook",
                 "-i", "hosts",
                 "-l", "localhost",
-                self._playbook(playbook),
-                self._tags(tags)
-            ],
+                self._playbook(playbook)
+            ] +
+            self._tags(tags),
             cwd=self._remote_ansible_dir
         )
 

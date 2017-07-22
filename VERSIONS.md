@@ -1,5 +1,9 @@
 # Version history
 
+## 0.5.1
+
+- Fix ansible call in dockerupdate when no tags are supplied
+
 ## 0.5.0
 
 - Update to the new /DOCKER/options format

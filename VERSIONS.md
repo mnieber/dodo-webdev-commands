@@ -1,5 +1,9 @@
 # Version history
 
+## 0.5.2
+
+- Add option --only-kill to tmux command
+
 ## 0.5.1
 
 - Fix ansible call in dockerupdate when no tags are supplied

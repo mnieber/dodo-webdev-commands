@@ -4,6 +4,9 @@ from dodo_commands.system_commands import DodoCommand
 
 class Command(DodoCommand):  # noqa
     help = ""
+    docker_options = [
+        ('name', 'python')
+    ]
 
     def add_arguments_imp(self, parser):  # noqa
         parser.add_argument('script')

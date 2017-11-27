@@ -1,5 +1,12 @@
 # Version history
 
+## 0.6.0
+
+- Use value /DJANGO/port in django-runserver
+- Allow to omit the name argument in dockerexec
+- Use values /PYTEST/capture, html_report test_file in pytest
+- Use value /TMUX/check_exists in dodo tmux
+
 ## 0.5.2
 
 - Add option --only-kill to tmux command

@@ -1,5 +1,6 @@
 # noqa
 from dodo_commands.extra.standard_commands import DodoCommand
+from dodo_commands.framework import CommandError
 from plumbum import local
 import os
 
@@ -28,6 +29,9 @@ class Command(DodoCommand):  # noqa
         ]
 
     def handle_imp(self, only_kill, **kwargs):  # noqa
+        check_exists = self.get_config('/TMUX/check_exists', '/')
+        if not os.path.exists(check_exists):
+            raise CommandError("Path %s does not exist" % check_exists)
 
         live_container_names = self._live_container_names()
         if live_container_names:

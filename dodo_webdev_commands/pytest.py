@@ -17,10 +17,20 @@ class Command(DodoCommand):  # noqa
         )
 
     def handle_imp(self, pytest_args, **kwargs):  # noqa
+        no_capture = not self.get_config("/PYTEST/capture", True)
+        html_report = self.get_config("/PYTEST/html_report", None)
+        test_file = self.get_config("/PYTEST/test_file", None)
+
         self.runcmd(
             [
                 self.get_config("/PYTEST/pytest", "pytest"),
-            ] + remove_trailing_dashes(pytest_args),
+            ] +
+            remove_trailing_dashes(
+                pytest_args +
+                ([test_file] if test_file else []) +
+                (["--capture", "no"] if no_capture else []) +
+                (["--html", html_report] if html_report else [])
+            ),
             cwd=self.get_config(
                 "/PYTEST/src_dir",
                 self.get_config("/ROOT/src_dir")

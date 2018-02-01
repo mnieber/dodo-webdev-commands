@@ -1,5 +1,11 @@
 # Version history
 
+## 0.7.0
+
+- Make dockerupdate a generic command
+- Add dockercreate command
+- Don't kill docker containers in dodo tmux
+
 ## 0.6.0
 
 - Use value /DJANGO/port in django-runserver

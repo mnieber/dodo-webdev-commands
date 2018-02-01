@@ -1,5 +1,9 @@
 # Version history
 
+## 0.7.1
+
+- Fix: import input command from six.moves
+
 ## 0.7.0
 
 - Make dockerupdate a generic command

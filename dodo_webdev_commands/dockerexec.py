@@ -1,6 +1,7 @@
 # noqa
 from dodo_commands.system_commands import DodoCommand
 from plumbum.cmd import docker
+from six.moves import input as raw_input
 
 
 class Command(DodoCommand):  # noqa

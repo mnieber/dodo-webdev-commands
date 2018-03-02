@@ -5,10 +5,6 @@ from dodo_commands.framework.util import remove_trailing_dashes
 
 
 class Command(DodoCommand):  # noqa
-    docker_options = [
-        ('name', 'webpack'),
-    ]
-
     def add_arguments_imp(self, parser):  # noqa
         parser.add_argument('--watch', action="store_true")
         parser.add_argument(

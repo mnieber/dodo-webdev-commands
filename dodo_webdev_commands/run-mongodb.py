@@ -4,9 +4,6 @@ from dodo_commands.extra.standard_commands import DodoCommand
 
 class Command(DodoCommand):  # noqa
     help = ""
-    docker_options = [
-        ('name', 'mongodb'),
-    ]
 
     def handle_imp(self, **kwargs):  # noqa
         self.runcmd(

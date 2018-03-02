@@ -1,5 +1,13 @@
 # Version history
 
+## 0.13.0
+
+- Synchronize version number with dodo commands
+- Remove dockerupdate command
+- Move dockercreate and dockerexec to standard commands
+- Remove docker_options attribute
+- Add script_args argument to dodo python
+
 ## 0.7.1
 
 - Fix: import input command from six.moves

@@ -1,8 +1,12 @@
 # Version history
 
+## 0.13.1
+
+- Add docker_update helper module
+
 ## 0.13.0
 
-- Synchronize version number with dodo commands
+- Synchronize major version number with dodo commands
 - Remove dockerupdate command
 - Move dockercreate and dockerexec to standard commands
 - Remove docker_options attribute

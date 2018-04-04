@@ -1,35 +1,37 @@
-# noqa
-import argparse
-from dodo_commands.system_commands import DodoCommand
+from argparse import ArgumentParser, REMAINDER
+from dodo_commands.framework import Dodo
 from dodo_commands.framework.util import remove_trailing_dashes
 
 
-class Command(DodoCommand):  # noqa
-    help = ""
+def _args():
+    parser = ArgumentParser()
+    parser.add_argument(
+        'pytest_args',
+        nargs=REMAINDER
+    )
+    args = Dodo.parse_args(parser)
+    args.no_capture = not Dodo.get_config("/PYTEST/capture", True)
+    args.html_report = Dodo.get_config("/PYTEST/html_report", None)
+    args.test_file = Dodo.get_config("/PYTEST/test_file", None)
+    args.pytest = Dodo.get_config("/PYTEST/pytest", "pytest")
+    args.cwd = Dodo.get_config(
+        "/PYTEST/src_dir",
+        Dodo.get_config("/ROOT/src_dir")
+    )
+    return args
 
-    def add_arguments_imp(self, parser):  # noqa
-        parser.add_argument(
-            'pytest_args',
-            nargs=argparse.REMAINDER
-        )
 
-    def handle_imp(self, pytest_args, **kwargs):  # noqa
-        no_capture = not self.get_config("/PYTEST/capture", True)
-        html_report = self.get_config("/PYTEST/html_report", None)
-        test_file = self.get_config("/PYTEST/test_file", None)
-
-        self.runcmd(
-            [
-                self.get_config("/PYTEST/pytest", "pytest"),
-            ] +
-            remove_trailing_dashes(
-                pytest_args +
-                ([test_file] if test_file else []) +
-                (["--capture", "no"] if no_capture else []) +
-                (["--html", html_report] if html_report else [])
-            ),
-            cwd=self.get_config(
-                "/PYTEST/src_dir",
-                self.get_config("/ROOT/src_dir")
-            )
-        )
+if Dodo.is_main(__name__):
+    args = _args()
+    Dodo.runcmd(
+        [
+            args.pytest,
+        ] +
+        remove_trailing_dashes(
+            args.pytest_args +
+            ([args.test_file] if args.test_file else []) +
+            (["--capture", "no"] if args.no_capture else []) +
+            (["--html", args.html_report] if args.html_report else [])
+        ),
+        cwd=args.cwd
+    )

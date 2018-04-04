@@ -1,30 +1,33 @@
-# noqa
-import argparse
+from argparse import ArgumentParser, REMAINDER
+from dodo_commands.framework import Dodo
 import os
-from dodo_commands.system_commands import DodoCommand
 from dodo_commands.framework.util import remove_trailing_dashes
 
 
-class Command(DodoCommand):  # noqa
-    help = ""
+def _args():
+    parser = ArgumentParser()
+    parser.add_argument(
+        'tape_args',
+        nargs=REMAINDER
+    )
+    args = Dodo.parse_args(parser)
+    args.webpack = Dodo.get_config("/WEBPACK/webpack", "webpack")
+    args.webpack_config = Dodo.get_config("/TAPE/webpack_config")
+    args.tape = Dodo.get_config("/TAPE/tape"),
+    args.bundle_file = Dodo.get_config("/TAPE/bundle_file"),
+    return args
 
-    def add_arguments_imp(self, parser):  # noqa
-        parser.add_argument(
-            'tape_args',
-            nargs=argparse.REMAINDER
-        )
 
-    def handle_imp(self, tape_args, **kwargs):  # noqa
-        webpack = self.get_config("/WEBPACK/webpack", "webpack")
-        webpack_config = self.get_config("/TAPE/webpack_config")
+if Dodo.is_main(__name__):
+    args = _args()
 
-        self.runcmd(
-            [webpack, "--config", webpack_config],
-            cwd=os.path.dirname(webpack_config)
-        )
-        self.runcmd(
-            [
-                self.get_config("/TAPE/tape"),
-                self.get_config("/TAPE/bundle_file"),
-            ] + remove_trailing_dashes(tape_args)
-        )
+    Dodo.runcmd(
+        [args.webpack, "--config", args.webpack_config],
+        cwd=os.path.dirname(args.webpack_config)
+    )
+    Dodo.runcmd(
+        [
+            args.tape,
+            args.bundle_file,
+        ] + remove_trailing_dashes(args.tape_args)
+    )

@@ -1,24 +1,27 @@
 """Run the webpack command."""
-import argparse
-from dodo_commands.system_commands import DodoCommand
+from argparse import ArgumentParser, REMAINDER
+from dodo_commands.framework import Dodo
 from dodo_commands.framework.util import remove_trailing_dashes
 
 
-class Command(DodoCommand):  # noqa
-    def add_arguments_imp(self, parser):  # noqa
-        parser.add_argument('--watch', action="store_true")
-        parser.add_argument(
-            'webpack_args',
-            nargs=argparse.REMAINDER
-        )
+def _args():
+    parser = ArgumentParser()
+    parser.add_argument('--watch', action="store_true")
+    parser.add_argument(
+        'webpack_args',
+        nargs=REMAINDER
+    )
+    args = Dodo.parse_args(parser)
+    args.webpack = Dodo.get_config("/WEBPACK/webpack", "webpack")
+    args.cwd = Dodo.get_config("/WEBPACK/webpack_dir")
+    return args
 
-    def handle_imp(self, watch, webpack_args, **kwargs):  # noqa
-        webpack = self.get_config("/WEBPACK/webpack", "webpack")
-        webpack_args = webpack_args or []
 
-        self.runcmd(
-            [webpack]
-            + (["--watch-stdin"] if watch else [])
-            + remove_trailing_dashes(webpack_args),
-            cwd=self.get_config("/WEBPACK/webpack_dir")
-        )
+if Dodo.is_main(__name__):
+    args = _args()
+    Dodo.runcmd(
+        [args.webpack]
+        + (["--watch-stdin"] if args.watch else [])
+        + remove_trailing_dashes(args.webpack_args or []),
+        cwd=args.cwd
+    )

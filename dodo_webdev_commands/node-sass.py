@@ -1,40 +1,44 @@
-# noqa
-import argparse
-from dodo_commands.system_commands import DodoCommand
+from argparse import ArgumentParser, REMAINDER
+from dodo_commands.framework import Dodo
 import os
 
-class Command(DodoCommand):  # noqa
-    help = ""
 
-    def _cmd_str(self, args):
-        nodesass = self.get_config("/SASS/nodesass", "node-sass")
-        cmds = []
-        for src_file, output_file in self.get_config("/SASS/src_map").items():
-            cmds.append("{nodesass} {src_file} {output_file} {args}".format(
-                nodesass=nodesass,
-                src_file=src_file,
-                output_file=output_file,
-                args=" ".join(args)
-            ))
-        return " & ".join(cmds)
+def _args():
+    parser = ArgumentParser()
+    parser.add_argument('--watch', action="store_true")
+    parser.add_argument(
+        'nodesass_args',
+        nargs=REMAINDER
+    )
+    args = Dodo.parse_args(parser)
+    args.nodesass = Dodo.get_config("/SASS/nodesass", "node-sass")
+    args.src_map = Dodo.get_config("/SASS/src_map")
+    return args
 
-    def add_arguments_imp(self, parser):  # noqa
-        parser.add_argument('--watch', action="store_true")
-        parser.add_argument(
-            'nodesass_args',
-            nargs=argparse.REMAINDER
+
+def _cmd_str(args):
+    cmds = []
+    for src_file, output_file in args.src_map.items():
+        cmds.append("{nodesass} {src_file} {output_file} {args}".format(
+            nodesass=args.nodesass,
+            src_file=src_file,
+            output_file=output_file,
+            args=" ".join(args)
+        ))
+    return " & ".join(cmds)
+
+
+if Dodo.is_main(__name__):
+    args = _args()
+    for src_file, output_file in args.src_map.items():
+        Dodo.runcmd(
+            [
+                "mkdir",
+                "-p",
+                os.path.dirname(output_file)
+            ]
         )
 
-    def handle_imp(self, watch, nodesass_args, **kwargs):  # noqa
-        for src_file, output_file in self.get_config("/SASS/src_map").items():
-            self.runcmd(
-                [
-                    "mkdir",
-                    "-p",
-                    os.path.dirname(output_file)
-                ]
-            )
-
-        self.runcmd(["/bin/bash", "-c", self._cmd_str(nodesass_args)])
-        if watch:
-            self.runcmd(["/bin/bash", "-c", self._cmd_str(nodesass_args + ['-w'])])
+    Dodo.runcmd(["/bin/bash", "-c", _cmd_str(args.nodesass_args)])
+    if args.watch:
+        Dodo.runcmd(["/bin/bash", "-c", _cmd_str(args.nodesass_args + ['-w'])])

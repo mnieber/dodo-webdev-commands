@@ -1,25 +1,28 @@
-# noqa
-from dodo_commands.system_commands import DodoCommand
+from argparse import ArgumentParser
+from dodo_commands.framework import Dodo
 import os
 
 
-class Command(DodoCommand):  # noqa
-    help = ""
+def _args():
+    parser = ArgumentParser()
+    args = Dodo.parse_args(parser)
+    args.output_dir = Dodo.get_config('/SPHINX/output_dir')
+    args.src_dir = Dodo.get_config('/SPHINX/src_dir')
+    return args
 
-    def add_arguments_imp(self, parser):  # noqa
-        pass
 
-    def handle_imp(self, **kwargs):  # noqa
-        output_dir = self.get_config('/SPHINX/output_dir')
-        if not os.path.exists(output_dir):
-            self.runcmd(['mkdir', '-p', output_dir])
+if Dodo.is_main(__name__):
+    args = _args()
 
-        self.runcmd(
-            [
-                'sphinx-build',
-                '-b',
-                'html',
-                self.get_config('/SPHINX/src_dir'),
-                output_dir,
-            ],
-        )
+    if not os.path.exists(args.output_dir):
+        Dodo.runcmd(['mkdir', '-p', args.output_dir])
+
+    Dodo.runcmd(
+        [
+            'sphinx-build',
+            '-b',
+            'html',
+            args.src_dir,
+            args.output_dir,
+        ],
+    )

@@ -1,24 +1,27 @@
-# noqa
-import argparse
-from dodo_commands.system_commands import DodoCommand
+from argparse import ArgumentParser, REMAINDER
+from dodo_commands.framework import Dodo
 from dodo_commands.framework.util import remove_trailing_dashes
 
 
-class Command(DodoCommand):  # noqa
-    help = ""
+def _args():
+    parser = ArgumentParser()
+    parser.add_argument('script')
+    parser.add_argument(
+        'script_args',
+        nargs=REMAINDER
+    )
+    args = Dodo.parse_args(parser)
+    args.python = Dodo.get_config('/PYTHON/python')
+    args.cwd = Dodo.get_config('/PYTHON/src_dir')
+    return args
 
-    def add_arguments_imp(self, parser):  # noqa
-        parser.add_argument('script')
-        parser.add_argument(
-            'script_args',
-            nargs=argparse.REMAINDER
-        )
 
-    def handle_imp(self, script, script_args, **kwargs):  # noqa
-        self.runcmd(
-            [
-                self.get_config('/PYTHON/python'),
-                script,
-            ] + remove_trailing_dashes(script_args),
-            cwd=self.get_config('/PYTHON/src_dir')
-        )
+if Dodo.is_main(__name__):
+    args = _args()
+    Dodo.runcmd(
+        [
+            args.python,
+            args.script,
+        ] + remove_trailing_dashes(args.script_args),
+        cwd=args.cwd
+    )

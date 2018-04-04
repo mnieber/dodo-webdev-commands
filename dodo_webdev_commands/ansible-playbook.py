@@ -1,29 +1,33 @@
-# noqa
-import argparse
-from dodo_commands.extra.standard_commands import DodoCommand
+from argparse import ArgumentParser, REMAINDER
+from dodo_commands.framework import Dodo
 from dodo_commands.framework.util import remove_trailing_dashes
 
 
-class Command(DodoCommand):  # noqa
-    help = ""
+def _args():
+    parser = ArgumentParser()
+    parser.add_argument(
+        '--playbook',
+        default=Dodo.get_config("/ANSIBLE/default_playbook", None)
+    )
+    parser.add_argument('server')
+    parser.add_argument(
+        'ansible_args',
+        nargs=REMAINDER
+    )
+    args = Dodo.parse_args(parser)
+    args.cwd = Dodo.get_config("/ANSIBLE/src_dir")
+    return args
 
-    def add_arguments_imp(self, parser):  # noqa
-        parser.add_argument('--playbook')
-        parser.add_argument('server')
-        parser.add_argument(
-            'ansible_args',
-            nargs=argparse.REMAINDER
-        )
 
-    def handle_imp(self, server, playbook, ansible_args, **kwargs):  # noqa
-        playbook = playbook or self.get_config("/ANSIBLE/default_playbook")
-        self.runcmd(
-            [
-                "ansible-playbook",
-                "-i", "hosts",
-                playbook,
-                "-l", server
-            ]
-            + remove_trailing_dashes(ansible_args),
-            cwd=self.get_config("/ANSIBLE/src_dir")
-        )
+if Dodo.is_main(__name__):
+    args = _args()
+    Dodo.runcmd(
+        [
+            "ansible-playbook",
+            "-i", "hosts",
+            args.playbook,
+            "-l", args.server
+        ]
+        + remove_trailing_dashes(args.ansible_args),
+        cwd=args.cwd
+    )

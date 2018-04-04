@@ -1,23 +1,36 @@
-"""Run a django-manage command."""
 import argparse
-from dodo_commands.system_commands import DodoCommand
+from argparse import ArgumentParser
+from dodo_commands.framework import Dodo
 from dodo_commands.framework.util import remove_trailing_dashes
 
 
-class Command(DodoCommand):  # noqa
-    def add_arguments_imp(self, parser):  # noqa
-        parser.add_argument(
-            'manage_args',
-            nargs=argparse.REMAINDER
-        )
+def _args():
+    parser = ArgumentParser(description='Run a django-manage command.')
+    parser.add_argument(
+        '--name',
+    )
+    parser.add_argument(
+        'manage_args',
+        nargs=argparse.REMAINDER
+    )
+    args = Dodo.parse_args(parser)
+    args.python = Dodo.get_config("/DJANGO/python")
+    args.cwd = Dodo.get_config("/DJANGO/src_dir")
+    return args
 
-    def handle_imp(  # noqa
-        self, manage_args, *args, **kwargs
-    ):
-        self.runcmd(
-            [
-                self.get_config("/DJANGO/python"),
-                "manage.py",
-            ] + remove_trailing_dashes(manage_args),
-            cwd=self.get_config("/DJANGO/src_dir")
-        )
+
+if Dodo.is_main(__name__):
+    args = _args()
+    if args.name:
+        Dodo.config['DOCKER'] \
+            .setdefault('options', {}) \
+            .setdefault('django-manage', {}) \
+            .setdefault('name', args.name)
+
+    Dodo.runcmd(
+        [
+            args.python,
+            "manage.py",
+        ] + remove_trailing_dashes(args.manage_args),
+        cwd=args.cwd
+    )

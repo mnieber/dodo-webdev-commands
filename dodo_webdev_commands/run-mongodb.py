@@ -1,17 +1,21 @@
-# noqa
-from dodo_commands.extra.standard_commands import DodoCommand
+from argparse import ArgumentParser
+from dodo_commands.framework import Dodo
 
 
-class Command(DodoCommand):  # noqa
-    help = ""
+def _args():
+    parser = ArgumentParser()
+    args = Dodo.parse_args(parser)
+    return args
 
-    def handle_imp(self, **kwargs):  # noqa
-        self.runcmd(
-            [
-                "sudo", "-u", "mongodb",
-                "/usr/bin/mongod",
-                "--bind_ip", "0.0.0.0",
-                "--config", "/etc/mongod.conf",
-            ],
-            cwd="/"
-        )
+
+if Dodo.is_main(__name__):
+    args = _args()
+    Dodo.runcmd(
+        [
+            "sudo", "-u", "mongodb",
+            "/usr/bin/mongod",
+            "--bind_ip", "0.0.0.0",
+            "--config", "/etc/mongod.conf",
+        ],
+        cwd="/"
+    )

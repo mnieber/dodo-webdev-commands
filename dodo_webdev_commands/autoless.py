@@ -1,32 +1,37 @@
-# noqa
-import argparse
-from dodo_commands.system_commands import DodoCommand
+from argparse import ArgumentParser, REMAINDER
+from dodo_commands.framework import Dodo
 from dodo_commands.framework.util import remove_trailing_dashes
 
-class Command(DodoCommand):  # noqa
-    help = ""
 
-    def add_arguments_imp(self, parser):  # noqa
-        parser.add_argument(
-            'autoless_args',
-            nargs=argparse.REMAINDER
-        )
+def _args():
+    parser = ArgumentParser()
+    parser.add_argument(
+        'autoless_args',
+        nargs=REMAINDER
+    )
+    args = Dodo.parse_args(parser)
+    args.autoless = Dodo.get_config("/LESS/autoless", "autoless")
+    args.output_dir = Dodo.get_config("/LESS/output_dir")
+    args.cwd = Dodo.get_config("/LESS/src_dir")
+    return args
 
-    def handle_imp(self, autoless_args, **kwargs):  # noqa
-        autoless = self.get_config("/LESS/autoless", "autoless")
-        self.runcmd(
-            [
-                "mkdir",
-                "-p",
-                self.get_config("/LESS/output_dir")
-            ]
-        )
 
-        self.runcmd(
-            [
-                autoless,
-                ".",
-                self.get_config("/LESS/output_dir")
-            ] + remove_trailing_dashes(autoless_args),
-            cwd=self.get_config("/LESS/src_dir")
-        )
+if Dodo.is_main(__name__):
+    args = _args()
+
+    Dodo.runcmd(
+        [
+            "mkdir",
+            "-p",
+            args.output_dir
+        ]
+    )
+
+    Dodo.runcmd(
+        [
+            args.autoless,
+            ".",
+            args.output_dir
+        ] + remove_trailing_dashes(args.autoless_args),
+        cwd=args.cwd
+    )

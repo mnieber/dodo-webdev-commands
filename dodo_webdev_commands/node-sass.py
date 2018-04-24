@@ -16,14 +16,14 @@ def _args():
     return args
 
 
-def _cmd_str(args):
+def _cmd_str(args, nodesass_args):
     cmds = []
     for src_file, output_file in args.src_map.items():
         cmds.append("{nodesass} {src_file} {output_file} {args}".format(
             nodesass=args.nodesass,
             src_file=src_file,
             output_file=output_file,
-            args=" ".join(args)
+            args=" ".join(nodesass_args)
         ))
     return " & ".join(cmds)
 
@@ -39,6 +39,8 @@ if Dodo.is_main(__name__):
             ]
         )
 
-    Dodo.runcmd(["/bin/bash", "-c", _cmd_str(args.nodesass_args)])
+    Dodo.runcmd(["/bin/bash", "-c", _cmd_str(args, args.nodesass_args)])
     if args.watch:
-        Dodo.runcmd(["/bin/bash", "-c", _cmd_str(args.nodesass_args + ['-w'])])
+        Dodo.runcmd(
+            ["/bin/bash", "-c", _cmd_str(args, args.nodesass_args + ['-w'])]
+        )

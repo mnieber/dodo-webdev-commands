@@ -1,5 +1,9 @@
 # Version history
 
+## 0.13.2
+
+- Fix commands broken by refactoring
+
 ## 0.13.1
 
 - Add docker_update helper module

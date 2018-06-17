@@ -2,10 +2,10 @@ from setuptools import setup
 
 
 setup(name='dodo_webdev_commands',
-      version='0.13.1',
+      version='0.13.2',
       description='Web development related Dodo Commands',
       url='https://github.com/mnieber/dodo_webdev_commands',
-      download_url='https://github.com/mnieber/dodo_webdev_commands/tarball/0.13.1',
+      download_url='https://github.com/mnieber/dodo_webdev_commands/tarball/0.13.2',
       author='Maarten Nieber',
       author_email='hallomaarten@yahoo.com',
       license='MIT',

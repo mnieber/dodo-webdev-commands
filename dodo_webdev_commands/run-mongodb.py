@@ -12,10 +12,13 @@ if Dodo.is_main(__name__):
     args = _args()
     Dodo.runcmd(
         [
-            "sudo", "-u", "mongodb",
+            "sudo",
+            "-u",
+            "mongodb",
             "/usr/bin/mongod",
-            "--bind_ip", "0.0.0.0",
-            "--config", "/etc/mongod.conf",
+            "--bind_ip",
+            "0.0.0.0",
+            "--config",
+            "/etc/mongod.conf",
         ],
-        cwd="/"
-    )
+        cwd="/")

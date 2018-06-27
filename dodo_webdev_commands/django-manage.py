@@ -6,13 +6,8 @@ from dodo_commands.framework.util import remove_trailing_dashes
 
 def _args():
     parser = ArgumentParser(description='Run a django-manage command.')
-    parser.add_argument(
-        '--name',
-    )
-    parser.add_argument(
-        'manage_args',
-        nargs=argparse.REMAINDER
-    )
+    parser.add_argument('--name', )
+    parser.add_argument('manage_args', nargs=argparse.REMAINDER)
     args = Dodo.parse_args(parser)
     args.python = Dodo.get_config("/DJANGO/python")
     args.cwd = Dodo.get_config("/DJANGO/src_dir")
@@ -32,5 +27,4 @@ if Dodo.is_main(__name__):
             args.python,
             "manage.py",
         ] + remove_trailing_dashes(args.manage_args),
-        cwd=args.cwd
-    )
+        cwd=args.cwd)

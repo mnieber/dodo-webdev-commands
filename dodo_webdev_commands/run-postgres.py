@@ -12,10 +12,13 @@ if Dodo.is_main(__name__):
     args = _args()
     Dodo.runcmd(
         [
-            "sudo", "-u", "postgres",
+            "sudo",
+            "-u",
+            "postgres",
             "/usr/lib/postgresql/9.5/bin/postgres",
-            "-D" "/var/lib/postgresql/9.5/main",
-            "-c", "config_file=/etc/postgresql/9.5/main/postgresql.conf",
+            "-D"
+            "/var/lib/postgresql/9.5/main",
+            "-c",
+            "config_file=/etc/postgresql/9.5/main/postgresql.conf",
         ],
-        cwd="/"
-    )
+        cwd="/")

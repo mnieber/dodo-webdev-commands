@@ -10,8 +10,7 @@ def add_name_argument(parser, choices=None):
     parser.add_argument(
         'name',
         help='Identifies docker image in /DOCKER/images',
-        choices=choices or Dodo.get_config('/DOCKER/images', {}).keys()
-    )
+        choices=choices or Dodo.get_config('/DOCKER/images', {}).keys())
 
 
 def commit_container(docker_image):

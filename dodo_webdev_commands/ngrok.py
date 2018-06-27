@@ -12,10 +12,8 @@ def _args():
 
 if Dodo.is_main(__name__):
     args = _args()
-    Dodo.runcmd(
-        [
-            args.ngrok,
-            'http',
-            str(args.port),
-        ]
-    )
+    Dodo.runcmd([
+        args.ngrok,
+        'http',
+        str(args.port),
+    ])

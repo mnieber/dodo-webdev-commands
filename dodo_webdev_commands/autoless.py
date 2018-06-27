@@ -5,10 +5,7 @@ from dodo_commands.framework.util import remove_trailing_dashes
 
 def _args():
     parser = ArgumentParser()
-    parser.add_argument(
-        'autoless_args',
-        nargs=REMAINDER
-    )
+    parser.add_argument('autoless_args', nargs=REMAINDER)
     args = Dodo.parse_args(parser)
     args.autoless = Dodo.get_config("/LESS/autoless", "autoless")
     args.output_dir = Dodo.get_config("/LESS/output_dir")
@@ -19,19 +16,9 @@ def _args():
 if Dodo.is_main(__name__):
     args = _args()
 
-    Dodo.runcmd(
-        [
-            "mkdir",
-            "-p",
-            args.output_dir
-        ]
-    )
+    Dodo.runcmd(["mkdir", "-p", args.output_dir])
 
     Dodo.runcmd(
-        [
-            args.autoless,
-            ".",
-            args.output_dir
-        ] + remove_trailing_dashes(args.autoless_args),
-        cwd=args.cwd
-    )
+        [args.autoless, ".", args.output_dir] + remove_trailing_dashes(
+            args.autoless_args),
+        cwd=args.cwd)

@@ -6,10 +6,7 @@ from dodo_commands.framework.util import remove_trailing_dashes
 def _args():
     parser = ArgumentParser()
     parser.add_argument('script')
-    parser.add_argument(
-        'script_args',
-        nargs=REMAINDER
-    )
+    parser.add_argument('script_args', nargs=REMAINDER)
     args = Dodo.parse_args(parser)
     args.python = Dodo.get_config('/PYTHON/python')
     args.cwd = Dodo.get_config('/PYTHON/src_dir')
@@ -23,5 +20,4 @@ if Dodo.is_main(__name__):
             args.python,
             args.script,
         ] + remove_trailing_dashes(args.script_args),
-        cwd=args.cwd
-    )
+        cwd=args.cwd)

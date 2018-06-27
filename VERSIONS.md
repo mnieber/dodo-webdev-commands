@@ -1,5 +1,9 @@
 # Version history
 
+## 0.13.3
+
+- Format all python files with yapf
+
 ## 0.13.2
 
 - Fix commands broken by refactoring

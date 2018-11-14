@@ -16,9 +16,9 @@ def _args():
 if Dodo.is_main(__name__):
     args = _args()
 
-    Dodo.runcmd(["mkdir", "-p", args.output_dir])
+    Dodo.run(["mkdir", "-p", args.output_dir])
 
-    Dodo.runcmd(
+    Dodo.run(
         [args.autoless, ".", args.output_dir] + remove_trailing_dashes(
             args.autoless_args),
         cwd=args.cwd)

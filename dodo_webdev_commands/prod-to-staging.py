@@ -14,10 +14,10 @@ if Dodo.is_main(__name__, safe=True):
 
     org_layer = dodo('layer', 'django')[:-1]
 
-    Dodo.runcmd(['dodo', 'layer', 'django', 'prod'], cwd='.')
-    Dodo.runcmd(['dodo', 'django-manage', 'dump-db'], cwd='.')
-    Dodo.runcmd(['dodo', 'layer', 'django', 'staging'], cwd='.')
-    Dodo.runcmd(['dodo', 'django-manage', 'restore-db'], cwd='.')
-    Dodo.runcmd(['dodo', 'django-manage', 'anonymize_db'], cwd='.')
-    Dodo.runcmd(['dodo', 'django-manage', 'dump-db'], cwd='.')
-    Dodo.runcmd(['dodo', 'layer', 'django', org_layer], cwd='.')
+    Dodo.run(['dodo', 'layer', 'django', 'prod'], cwd='.')
+    Dodo.run(['dodo', 'django-manage', 'dump-db'], cwd='.')
+    Dodo.run(['dodo', 'layer', 'django', 'staging'], cwd='.')
+    Dodo.run(['dodo', 'django-manage', 'restore-db'], cwd='.')
+    Dodo.run(['dodo', 'django-manage', 'anonymize_db'], cwd='.')
+    Dodo.run(['dodo', 'django-manage', 'dump-db'], cwd='.')
+    Dodo.run(['dodo', 'layer', 'django', org_layer], cwd='.')

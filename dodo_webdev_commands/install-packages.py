@@ -16,7 +16,6 @@ if Dodo.is_main(__name__, safe=True):
     pip = os.path.join(Dodo.get_config('/SERVER/venv_dir'), 'bin', 'pip')
     requirements_filename = Dodo.get_config('/SERVER/pip_requirements')
 
-    Dodo.runcmd([pip, 'install', '-r', requirements_filename])
-    Dodo.runcmd(
-        ['yarn', 'install'],
-        cwd=os.path.abspath(os.path.join(args.node_modules_dir, '..')))
+    Dodo.run([pip, 'install', '-r', requirements_filename])
+    Dodo.run(['yarn', 'install'],
+             cwd=os.path.abspath(os.path.join(args.node_modules_dir, '..')))

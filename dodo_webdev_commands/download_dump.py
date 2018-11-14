@@ -30,14 +30,13 @@ if Dodo.is_main(__name__, safe=True):
             'is_interactive': False
         })})
 
-    dump_fns = Dodo.runcmd(
-        [
-            'ssh',
-            'root@%s' % args.host,
-            'ls',
-            os.path.join(dumps_dir, '*.sql'),
-        ],
-        capture=True).split()
+    dump_fns = Dodo.run([
+        'ssh',
+        'root@%s' % args.host,
+        'ls',
+        os.path.join(dumps_dir, '*.sql'),
+    ],
+                        capture=True).split()
 
     dump_fns = sorted([x for x in dump_fns if x], key=_get_timestamp)
 
@@ -51,4 +50,4 @@ if Dodo.is_main(__name__, safe=True):
         raise CommandError(str(e))
 
     for dump_fn in selected_fns:
-        Dodo.runcmd(['scp', 'root@%s:%s' % (args.host, dump_fn), dump_fn])
+        Dodo.run(['scp', 'root@%s:%s' % (args.host, dump_fn), dump_fn])

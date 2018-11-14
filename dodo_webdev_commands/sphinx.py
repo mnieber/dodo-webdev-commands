@@ -15,9 +15,9 @@ if Dodo.is_main(__name__):
     args = _args()
 
     if not os.path.exists(args.output_dir):
-        Dodo.runcmd(['mkdir', '-p', args.output_dir])
+        Dodo.run(['mkdir', '-p', args.output_dir])
 
-    Dodo.runcmd([
+    Dodo.run([
         'sphinx-build',
         '-b',
         'html',

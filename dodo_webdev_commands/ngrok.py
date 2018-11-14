@@ -12,7 +12,7 @@ def _args():
 
 if Dodo.is_main(__name__):
     args = _args()
-    Dodo.runcmd([
+    Dodo.run([
         args.ngrok,
         'http',
         str(args.port),

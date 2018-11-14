@@ -17,7 +17,7 @@ def _args():
 
 if Dodo.is_main(__name__):
     args = _args()
-    Dodo.runcmd(
+    Dodo.run(
         ["ansible-playbook", "-i", "hosts", args.playbook, "-l", args.server] +
         remove_trailing_dashes(args.ansible_args),
         cwd=args.cwd)

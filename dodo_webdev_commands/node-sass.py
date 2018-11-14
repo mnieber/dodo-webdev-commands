@@ -27,10 +27,10 @@ def _cmd_str(args, nodesass_args):
 if Dodo.is_main(__name__):
     args = _args()
     for src_file, output_file in args.src_map.items():
-        Dodo.runcmd(["mkdir", "-p", os.path.dirname(output_file)])
+        Dodo.run(["mkdir", "-p", os.path.dirname(output_file)])
 
-    Dodo.runcmd(["/bin/bash", "-c", _cmd_str(args, args.nodesass_args)])
+    Dodo.run(["/bin/bash", "-c", _cmd_str(args, args.nodesass_args)])
     if args.watch:
-        Dodo.runcmd(
+        Dodo.run(
             ["/bin/bash", "-c",
              _cmd_str(args, args.nodesass_args + ['-w'])])

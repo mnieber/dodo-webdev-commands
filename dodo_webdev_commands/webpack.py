@@ -16,7 +16,7 @@ def _args():
 
 if Dodo.is_main(__name__):
     args = _args()
-    Dodo.runcmd(
+    Dodo.run(
         [args.webpack] + (["--watch-stdin"] if args.watch else []) +
         remove_trailing_dashes(args.webpack_args or []),
         cwd=args.cwd)

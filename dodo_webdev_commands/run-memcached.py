@@ -10,4 +10,4 @@ def _args():
 
 if Dodo.is_main(__name__):
     args = _args()
-    Dodo.runcmd(["memcached", "-u", "memcache", "-vvv"], cwd="/")
+    Dodo.run(["memcached", "-u", "memcache", "-vvv"], cwd="/")

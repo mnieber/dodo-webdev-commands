@@ -18,10 +18,9 @@ def _args():
 if Dodo.is_main(__name__):
     args = _args()
 
-    Dodo.runcmd(
-        [args.webpack, "--config", args.webpack_config],
-        cwd=os.path.dirname(args.webpack_config))
-    Dodo.runcmd([
+    Dodo.run([args.webpack, "--config", args.webpack_config],
+             cwd=os.path.dirname(args.webpack_config))
+    Dodo.run([
         args.tape,
         args.bundle_file,
     ] + remove_trailing_dashes(args.tape_args))

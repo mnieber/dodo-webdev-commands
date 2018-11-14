@@ -22,7 +22,7 @@ if Dodo.is_main(__name__):
             .setdefault('django-manage', {}) \
             .setdefault('name', args.name)
 
-    Dodo.runcmd(
+    Dodo.run(
         [
             args.python,
             "manage.py",

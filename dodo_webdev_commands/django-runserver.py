@@ -1,11 +1,10 @@
 import argparse
-from argparse import ArgumentParser
 from dodo_commands.framework import Dodo
 from dodo_commands.framework.util import remove_trailing_dashes
 
 
 def _args():
-    parser = ArgumentParser()
+    parser = argparse.ArgumentParser()
     parser.add_argument('runserver_args', nargs=argparse.REMAINDER)
     args = Dodo.parse_args(parser)
     args.port = Dodo.get_config("/DJANGO/port", "8000")

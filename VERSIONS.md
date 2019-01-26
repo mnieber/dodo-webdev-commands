@@ -1,5 +1,13 @@
 # Version history
 
+## 0.14.0
+
+Add --name argument to yarn
+Refactor install-packages
+Add commands: psql, yarn, rtop download_dump, prod-to-staging, run-memcached
+Fix tape command
+Rename runcmd to run, and apply yapf
+
 ## 0.13.3
 
 - Format all python files with yapf

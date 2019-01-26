@@ -6,8 +6,11 @@ import os
 def _args():
     parser = ArgumentParser()
     args = Dodo.parse_args(parser)
-    args.node_modules_dir = Dodo.get_config('/SERVER/node_modules_dir')
-    args.pip = os.path.join(Dodo.get_config('/SERVER/venv_dir'), 'bin', 'pip')
+    args.node_modules_dir = Dodo.get_config('/SERVER/node_modules_dir', '')
+    venv_dir = Dodo.get_config('/SERVER/venv_dir', '')
+    args.pip = (os.path.join(venv_dir, 'bin', 'pip') if venv_dir else '')
+    args.requirements_filename = Dodo.get_config('/SERVER/pip_requirements',
+                                                 '')
     args.yarn = 'yarn'
     return args
 
@@ -15,9 +18,10 @@ def _args():
 if Dodo.is_main(__name__, safe=True):
     args = _args()
 
-    requirements_filename = Dodo.get_config('/SERVER/pip_requirements')
+    if args.requirements_filename:
+        Dodo.run([args.pip, 'install', '-r', args.requirements_filename])
 
-    Dodo.run([args.pip, 'install', '-r', requirements_filename])
-    Dodo.run(
-        [args.yarn, 'install'],
-        cwd=os.path.abspath(os.path.join(args.node_modules_dir, '..')))
+    if args.node_modules_dir:
+        Dodo.run([args.yarn, 'install'],
+                 cwd=os.path.abspath(
+                     os.path.join(args.node_modules_dir, '..')))

@@ -20,7 +20,7 @@ def commit_container(docker_image):
 
 
 def patch_docker_options(docker_image):
-    docker_options = Dodo.config['DOCKER'] \
+    docker_options = Dodo.get_config('/DOCKER') \
         .setdefault('options', {}) \
         .setdefault(Dodo.command_name, {})
 

@@ -17,7 +17,7 @@ def _args():
 if Dodo.is_main(__name__):
     args = _args()
     if args.name:
-        Dodo.config['DOCKER'] \
+        Dodo.get_config('/DOCKER') \
             .setdefault('options', {}) \
             .setdefault('django-manage', {}) \
             .setdefault('name', args.name)

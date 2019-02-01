@@ -25,18 +25,19 @@ if Dodo.is_main(__name__, safe=True):
     dumps_dir = '/srv/%s/dumps' % project_name
 
     merge_into_config(
-        Dodo.config['DOCKER'].setdefault('options', {}),
+        Dodo.get_config('/DOCKER').setdefault('options', {}),
         {Dodo.command_name: add_ssh_agent_args({
             'is_interactive': False
         })})
 
-    dump_fns = Dodo.run([
-        'ssh',
-        'root@%s' % args.host,
-        'ls',
-        os.path.join(dumps_dir, '*.sql'),
-    ],
-                        capture=True).split()
+    dump_fns = Dodo.run(
+        [
+            'ssh',
+            'root@%s' % args.host,
+            'ls',
+            os.path.join(dumps_dir, '*.sql'),
+        ],
+        capture=True).split()
 
     dump_fns = sorted([x for x in dump_fns if x], key=_get_timestamp)
 

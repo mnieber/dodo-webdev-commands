@@ -17,7 +17,7 @@ if Dodo.is_main(__name__, safe=True):
     args = _args()
 
     if args.name:
-        Dodo.config['DOCKER'] \
+        Dodo.get_config('/DOCKER') \
             .setdefault('options', {}) \
             .setdefault('yarn', {})['name'] = args.name
 

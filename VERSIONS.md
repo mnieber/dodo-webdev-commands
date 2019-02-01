@@ -1,5 +1,10 @@
 # Version history
 
+## 0.15.0
+
+- Add jekyll-bundle command
+- Remove use of Dodo.config
+
 ## 0.14.0
 
 Add --name argument to yarn

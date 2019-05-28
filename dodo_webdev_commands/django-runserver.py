@@ -5,7 +5,6 @@ from dodo_commands.framework.util import remove_trailing_dashes
 
 def _args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('runserver_args', nargs=argparse.REMAINDER)
     return Dodo.parse_args(
         parser,
         config_args=[

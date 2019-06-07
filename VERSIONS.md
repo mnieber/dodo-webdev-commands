@@ -1,5 +1,12 @@
 # Version history
 
+## 0.15.1
+
+- Remove obsolete command dodo psql
+- Rename command to download-dump
+- Use argument pg_version in run-postgres
+- Use --pip-requirements argument in install-packages
+
 ## 0.15.0
 
 - Add jekyll-bundle command

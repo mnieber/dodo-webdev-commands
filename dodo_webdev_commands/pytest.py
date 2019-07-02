@@ -8,6 +8,7 @@ def _args():
     parser.add_argument('pytest_args', nargs=REMAINDER)
     args = Dodo.parse_args(parser)
     args.no_capture = not Dodo.get_config("/PYTEST/capture", True)
+    args.reuse_db = Dodo.get_config("/PYTEST/reuse_db", False)
     args.html_report = Dodo.get_config("/PYTEST/html_report", None)
     args.test_file = Dodo.get_config("/PYTEST/test_file", None)
     args.pytest = Dodo.get_config("/PYTEST/pytest", "pytest")
@@ -24,5 +25,6 @@ if Dodo.is_main(__name__):
         ] + remove_trailing_dashes(
             args.pytest_args + ([args.test_file] if args.test_file else []) +
             (["--capture", "no"] if args.no_capture else []) +
+            (["--reuse-db"] if args.reuse_db else []) +
             (["--html", args.html_report] if args.html_report else [])),
         cwd=args.cwd)

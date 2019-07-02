@@ -24,6 +24,9 @@ def _args():
         args.requirements_filename = Dodo.get_config(
             '/SERVER/pip_requirements')
 
+    if args.node_modules_dir == 'default':
+        args.node_modules_dir = Dodo.get_config('/SERVER/node_modules_dir')
+
     return args
 
 

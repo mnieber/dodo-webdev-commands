@@ -11,6 +11,7 @@ def _args():
     args = Dodo.parse_args(parser)
     args.python = Dodo.get_config("/DJANGO/python")
     args.cwd = Dodo.get_config("/DJANGO/src_dir")
+    args.manage_py = Dodo.get_config("/DJANGO/manage_py", "manage.py")
     return args
 
 
@@ -25,6 +26,6 @@ if Dodo.is_main(__name__):
     Dodo.run(
         [
             args.python,
-            "manage.py",
+            args.manage_py,
         ] + remove_trailing_dashes(args.manage_args),
         cwd=args.cwd)

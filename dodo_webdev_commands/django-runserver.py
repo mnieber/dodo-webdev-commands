@@ -11,6 +11,7 @@ def _args():
             ConfigArg('/DJANGO/port', '--port', default='8000'),
             ConfigArg('/DJANGO/python', '--python', default='python'),
             ConfigArg('/DJANGO/src_dir', '--cwd', default='.'),
+            ConfigArg('/DJANGO/manage_py', '--manage-py', default='manage.py'),
             ConfigArg('/DJANGO/runserver_args', '--runserver_args', nargs='+'),
         ])
 
@@ -20,8 +21,8 @@ if Dodo.is_main(__name__):
     Dodo.run(
         [
             args.python,
-            "manage.py",
+            args.manage_py,
             "runserver",
             "0.0.0.0:%s" % args.port,
-        ] + remove_trailing_dashes(args.runserver_args),
+        ] + remove_trailing_dashes(args.runserver_args or []),
         cwd=args.cwd)

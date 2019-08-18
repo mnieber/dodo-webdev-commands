@@ -1,5 +1,6 @@
 from plumbum.cmd import docker
-from dodo_commands.framework import Dodo
+
+from dodo_commands import Dodo
 
 
 def _docker_image(name):

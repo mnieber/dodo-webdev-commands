@@ -1,6 +1,8 @@
 from argparse import ArgumentParser
-from dodo_commands.framework import Dodo
+
 from plumbum.cmd import dodo
+
+from dodo_commands import Dodo
 
 
 def _args():

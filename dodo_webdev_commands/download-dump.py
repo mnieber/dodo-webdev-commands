@@ -1,6 +1,7 @@
 import os
 from argparse import ArgumentParser
-from dodo_commands.framework import Dodo, CommandError
+
+from dodo_commands import Dodo, CommandError
 from dodo_commands.framework.config import merge_into_config
 from dodo_commands.framework.util import filter_choices
 from dodo_ssh_agent_commands.utils import add_ssh_agent_args

@@ -1,6 +1,6 @@
 import argparse
-from dodo_commands.framework import Dodo, ConfigArg
-from dodo_commands.framework.util import remove_trailing_dashes
+
+from dodo_commands import Dodo, ConfigArg, remove_trailing_dashes
 
 
 def _args():

@@ -1,6 +1,7 @@
 from argparse import ArgumentParser, REMAINDER
-from dodo_commands.framework import Dodo
 import os
+
+from dodo_commands import Dodo
 
 
 def _args():

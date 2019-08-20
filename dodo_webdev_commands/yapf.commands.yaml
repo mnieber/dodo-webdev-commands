@@ -1,0 +1,3 @@
+yapf-all:
+  print something:
+    args: echo "find `pwd` -iname '*.py' | xargs yapf -i"

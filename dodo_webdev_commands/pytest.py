@@ -13,7 +13,7 @@ def _args():
     args.test_file = Dodo.get_config("/PYTEST/test_file", None)
     args.pytest_ini_filename = Dodo.get_config("/PYTEST/pytest_ini", None)
     args.maxfail = Dodo.get_config("/PYTEST/maxfail", None)
-    args.pytest = Dodo.get_config("/SERVER/pytest", "pytest")
+    args.pytest = Dodo.get_config("/PYTEST/pytest", "pytest")
     args.cwd = Dodo.get_config("/PYTEST/src_dir",
                                Dodo.get_config("/ROOT/src_dir"))
     return args

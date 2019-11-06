@@ -1,5 +1,16 @@
 # Version history
 
+## 0.16.0
+
+- Add flow-install-types
+- Read pytest exe from /PYTEST/pytest
+- Add yapf commands
+- Add unused-imports.py
+- Add flow.py
+- Add option --manage-py to django-runserver
+- Add flag --reuse-db to dodo pytest
+- Support setting node_modules_dir to default in install-packages
+
 ## 0.15.1
 
 - Remove obsolete command dodo psql

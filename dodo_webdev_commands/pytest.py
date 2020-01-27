@@ -21,14 +21,14 @@ def _args():
 
 if Dodo.is_main(__name__):
     args = _args()
-    Dodo.run(
-        [
-            args.pytest,
-        ] + remove_trailing_dashes(
-            args.pytest_args + ([args.test_file] if args.test_file else []) +
-            (["--capture", "no"] if args.no_capture else []) +
-            (["--reuse-db"] if args.reuse_db else []) +
-            (["-c", args.pytest_ini_filename] if args.pytest_ini_filename else []) +
-            (["--maxfail", str(args.maxfail)] if args.maxfail else []) +
-            (["--html", args.html_report] if args.html_report else [])),
-        cwd=args.cwd)
+
+    pytest_exe_args = (args.pytest
+                       if isinstance(args.pytest, list) else [args.pytest])
+    Dodo.run(pytest_exe_args + remove_trailing_dashes(
+        args.pytest_args + ([args.test_file] if args.test_file else []) +
+        (["--capture", "no"] if args.no_capture else []) +
+        (["--reuse-db"] if args.reuse_db else []) +
+        (["-c", args.pytest_ini_filename] if args.pytest_ini_filename else []
+         ) + (["--maxfail", str(args.maxfail)] if args.maxfail else []) +
+        (["--html", args.html_report] if args.html_report else [])),
+             cwd=args.cwd)

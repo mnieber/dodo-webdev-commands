@@ -1,5 +1,9 @@
 # Version history
 
+## 0.17.0
+
+- Allow /PYTEST/pytest to be an array
+
 ## 0.16.0
 
 - Add flow-install-types

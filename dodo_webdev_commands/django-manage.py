@@ -2,6 +2,7 @@ import argparse
 from argparse import ArgumentParser
 
 from dodo_commands import Dodo, remove_trailing_dashes
+from dodo_commands.framework.util import maybe_list_to_list
 
 
 def _args():
@@ -23,9 +24,8 @@ if Dodo.is_main(__name__):
             .setdefault('django-manage', {}) \
             .setdefault('name', args.name)
 
-    Dodo.run(
-        [
-            args.python,
-            args.manage_py,
-        ] + remove_trailing_dashes(args.manage_args),
-        cwd=args.cwd)
+    Dodo.run([
+        *maybe_list_to_list(args.python), args.manage_py,
+        *remove_trailing_dashes(args.manage_args)
+    ],
+             cwd=args.cwd)

@@ -1,7 +1,7 @@
-from argparse import ArgumentParser
 import os
+from argparse import ArgumentParser
 
-from dodo_commands import Dodo, CommandError
+from dodo_commands import CommandError, Dodo
 
 
 def _args():
@@ -17,15 +17,15 @@ def _args():
 
     args = Dodo.parse_args(parser)
 
-    args.yarn = Dodo.get_config('/SERVER/yarn', 'yarn')
-    args.pip = Dodo.get_config('/SERVER/pip', 'pip')
+    args.yarn = Dodo.get_config('/NODE/yarn', 'yarn')
+    args.pip = Dodo.get_config('/PYTHON/pip', 'pip')
 
     if args.requirements_filename == 'default':
         args.requirements_filename = Dodo.get_config(
             '/SERVER/pip_requirements')
 
     if args.node_modules_dir == 'default':
-        args.node_modules_dir = Dodo.get_config('/SERVER/node_modules_dir')
+        args.node_modules_dir = Dodo.get_config('/NODE/node_modules_dir')
 
     return args
 

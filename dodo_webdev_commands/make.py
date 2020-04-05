@@ -9,7 +9,7 @@ def _args():
     parser.add_argument('what')
 
     args = Dodo.parse_args(parser)
-    args.cwd = Dodo.get_config('/MAKE/src_dir')
+    args.cwd = Dodo.get_config('/MAKE/cwd')
 
     # Raise an error if something is not right
     if False:

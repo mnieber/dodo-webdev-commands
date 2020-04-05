@@ -9,7 +9,7 @@ def _args():
     parser.add_argument('nps_args', nargs=argparse.REMAINDER)
 
     args = Dodo.parse_args(parser)
-    args.cwd = Dodo.get_config('/NODE/src_dir')
+    args.cwd = Dodo.get_config('/NODE/cwd')
     args.nps = Dodo.get_config('/NODE/nps', 'nps')
 
     # Raise an error if something is not right

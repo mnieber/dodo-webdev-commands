@@ -1,5 +1,11 @@
 # Version history
 
+## 0.18.0
+
+- Remove obsolete commands, prefer Makefiles
+- Add node, nps and make
+- Use cwd instead of src_dir in config
+
 ## 0.17.0
 
 - Allow /PYTEST/pytest to be an array

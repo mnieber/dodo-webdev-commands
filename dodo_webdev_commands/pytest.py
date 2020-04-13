@@ -1,13 +1,12 @@
-from argparse import REMAINDER, ArgumentParser
+from argparse import REMAINDER
 
 from dodo_commands import Dodo, remove_trailing_dashes
 
 
 def _args():
-    parser = ArgumentParser()
-    parser.add_argument('--cov', action='store_true')
-    parser.add_argument('pytest_args', nargs=REMAINDER)
-    args = Dodo.parse_args(parser)
+    Dodo.parser.add_argument('--cov', action='store_true')
+    Dodo.parser.add_argument('pytest_args', nargs=REMAINDER)
+    args = Dodo.parse_args()
     args.no_capture = not Dodo.get_config("/PYTEST/capture", True)
     args.reuse_db = Dodo.get_config("/PYTEST/reuse_db", False)
     args.html_report = Dodo.get_config("/PYTEST/html_report", None)
@@ -16,8 +15,7 @@ def _args():
     args.maxfail = Dodo.get_config("/PYTEST/maxfail", None)
     args.pytest = Dodo.get_config("/PYTEST/pytest", "pytest")
     args.coverage_dirs = Dodo.get_config("/PYTEST/coverage_dirs", [])
-    args.cwd = Dodo.get_config("/PYTEST/src_dir",
-                               Dodo.get_config("/ROOT/src_dir"))
+    args.cwd = Dodo.get_config("/PYTEST/cwd", Dodo.get_config("/ROOT/src_dir"))
     return args
 
 

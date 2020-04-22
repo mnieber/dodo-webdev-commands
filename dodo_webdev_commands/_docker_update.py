@@ -1,17 +1,17 @@
-from plumbum.cmd import docker
-
 from dodo_commands import Dodo
+
+from plumbum.cmd import docker
 
 
 def _docker_image(name):
-    return Dodo.get_config('DOCKER/images/%s/image' % name, name)
+    return Dodo.get_config('DOCKER_IMAGES/%s/image' % name, name)
 
 
 def add_name_argument(parser, choices=None):
-    parser.add_argument(
-        'name',
-        help='Identifies docker image in /DOCKER/images',
-        choices=choices or Dodo.get_config('/DOCKER/images', {}).keys())
+    parser.add_argument('name',
+                        help='Identifies docker image in /DOCKER_IMAGES',
+                        choices=choices
+                        or Dodo.get_config('/DOCKER_IMAGES', {}).keys())
 
 
 def commit_container(docker_image):

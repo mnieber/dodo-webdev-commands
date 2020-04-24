@@ -1,5 +1,3 @@
-import argparse
-
 from dodo_commands import Dodo, remove_trailing_dashes
 from dodo_commands.framework.util import maybe_list_to_list
 
@@ -7,7 +5,7 @@ from dodo_commands.framework.util import maybe_list_to_list
 def _args():
     Dodo.parser.description = 'Run a django-manage command.'
     Dodo.parser.add_argument('--name', )
-    Dodo.parser.add_argument('manage_args', nargs=argparse.REMAINDER)
+    Dodo.parser.add_argument('manage_args', nargs="*")
     args = Dodo.parse_args()
     args.python = Dodo.get_config("/DJANGO/python")
     args.cwd = Dodo.get_config("/DJANGO/cwd")

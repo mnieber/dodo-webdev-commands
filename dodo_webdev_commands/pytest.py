@@ -1,11 +1,9 @@
-from argparse import REMAINDER
-
 from dodo_commands import Dodo, remove_trailing_dashes
 
 
 def _args():
     Dodo.parser.add_argument('--cov', action='store_true')
-    Dodo.parser.add_argument('pytest_args', nargs=REMAINDER)
+    Dodo.parser.add_argument('pytest_args', nargs="*")
     args = Dodo.parse_args()
     args.no_capture = not Dodo.get_config("/PYTEST/capture", True)
     args.reuse_db = Dodo.get_config("/PYTEST/reuse_db", False)

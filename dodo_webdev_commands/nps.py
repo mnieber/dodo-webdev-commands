@@ -1,5 +1,3 @@
-import argparse
-
 from dodo_commands import (CommandError, DecoratorScope, Dodo,
                            remove_trailing_dashes)
 from dodo_commands.framework.global_config import (global_config_get,
@@ -12,7 +10,7 @@ def _args():
     Dodo.parser.description = 'Runs nps'
     Dodo.parser.add_argument('--cat', action="store_true")
     Dodo.parser.add_argument('--edit', action="store_true")
-    Dodo.parser.add_argument('nps_args', nargs=argparse.REMAINDER)
+    Dodo.parser.add_argument('nps_args', nargs="*")
 
     args = Dodo.parse_args()
     args.cwd = Dodo.get_config('/NODE/cwd')

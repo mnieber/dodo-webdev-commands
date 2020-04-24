@@ -1,13 +1,10 @@
-import argparse
-
 from dodo_commands import Dodo, remove_trailing_dashes
 
 
 def _args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('yarn_args', nargs=argparse.REMAINDER)
-    parser.add_argument('--name')
-    args = Dodo.parse_args(parser)
+    Dodo.parser.add_argument('yarn_args', nargs="*")
+    Dodo.parser.add_argument('--name')
+    args = Dodo.parse_args()
     args.yarn = 'yarn'
     args.cwd = Dodo.get_config('/WEBPACK/webpack_dir')
     return args

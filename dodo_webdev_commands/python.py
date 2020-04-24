@@ -1,11 +1,9 @@
-from argparse import REMAINDER
-
 from dodo_commands import Dodo, remove_trailing_dashes
 
 
 def _args():
     Dodo.parser.add_argument('script')
-    Dodo.parser.add_argument('script_args', nargs=REMAINDER)
+    Dodo.parser.add_argument('script_args', nargs="*")
     args = Dodo.parse_args()
     args.python = Dodo.get_config('/PYTHON/python')
     args.cwd = Dodo.get_config('/PYTHON/cwd')

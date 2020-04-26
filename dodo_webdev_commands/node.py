@@ -11,7 +11,7 @@ def _args():
     parser.add_argument('--shell', action='store_true')
 
     args = Dodo.parse_args(parser)
-    args.pwd = Dodo.get_config('/NODE/pwd')
+    args.cwd = Dodo.get_config('/NODE/cwd')
     args.node = Dodo.get_config('/NODE/node', 'node')
     args.entrypoint = Dodo.get_config('/NODE/entrypoint', 'index.js')
 
@@ -35,4 +35,4 @@ if Dodo.is_main(__name__, safe=True):
     entrypoint_args = ([]
                        if args.shell else maybe_list_to_list(args.entrypoint))
 
-    Dodo.run([*node_exe_args, *extra_args, *entrypoint_args], cwd=args.pwd)
+    Dodo.run([*node_exe_args, *extra_args, *entrypoint_args], cwd=args.cwd)

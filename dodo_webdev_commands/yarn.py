@@ -1,4 +1,4 @@
-from dodo_commands import Dodo, remove_trailing_dashes
+from dodo_commands import Dodo
 
 
 def _args():
@@ -19,4 +19,4 @@ if Dodo.is_main(__name__, safe=True):
             .setdefault('yarn', {})['name'] = args.name
 
     Dodo.run(
-        [args.yarn] + remove_trailing_dashes(args.yarn_args), cwd=args.cwd)
+        [args.yarn, *args.yarn_args], cwd=args.cwd)

@@ -1,4 +1,4 @@
-from dodo_commands import Dodo, remove_trailing_dashes
+from dodo_commands import Dodo
 
 
 def _args():
@@ -40,4 +40,4 @@ if Dodo.is_main(__name__):
         *(["--html", args.html_report] if args.html_report else []),
     ]
 
-    Dodo.run(remove_trailing_dashes(run_args), cwd=args.cwd)
+    Dodo.run(run_args, cwd=args.cwd)

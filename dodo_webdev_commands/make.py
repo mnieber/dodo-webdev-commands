@@ -6,21 +6,22 @@ from dodo_docker_commands.decorators.docker import invert_path
 
 
 def _args():
-    Dodo.parser.description = 'Runs make'
+    Dodo.parser.description = "Runs make"
 
-    Dodo.parser.add_argument('what', nargs="?")
-    Dodo.parser.add_argument('--cat', action="store_true")
-    Dodo.parser.add_argument('--edit', action="store_true")
+    Dodo.parser.add_argument("what", nargs="?")
+    Dodo.parser.add_argument("--cat", action="store_true")
+    Dodo.parser.add_argument("--edit", action="store_true")
 
     args = Dodo.parse_args()
-    args.cwd = Dodo.get_config('/MAKE/cwd')
+    args.cwd = Dodo.get_config("/MAKE/cwd")
+    args.file = Dodo.get_config("/MAKE/file", "Makefile")
 
     global_config = load_global_config_parser()
     args.editor = global_config_get(global_config, "settings", "editor")
 
     # Raise an error if something is not right
     if False:
-        raise CommandError('Oops')
+        raise CommandError("Oops")
 
     return args
 
@@ -30,9 +31,10 @@ if Dodo.is_main(__name__, safe=True):
     args = _args()
 
     if args.cat:
-        Dodo.run(['cat', "Makefile"], cwd=args.cwd)
+        Dodo.run(["cat", args.file], cwd=args.cwd)
     elif args.edit:
         with DecoratorScope("docker", remove=True):
-            Dodo.run([args.editor, "Makefile"], cwd=invert_path(args.cwd))
+            Dodo.run([args.editor, args.file], cwd=invert_path(args.cwd))
     else:
-        Dodo.run(['make', args.what], cwd=args.cwd)
+        file_args = ["-f", args.file] if args.file != "Makefile" else []
+        Dodo.run(["make", *file_args, args.what], cwd=args.cwd)

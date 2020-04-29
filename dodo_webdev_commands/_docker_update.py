@@ -1,6 +1,7 @@
 from dodo_commands import Dodo
+from dodo_commands.dependencies.get import plumbum
 
-from plumbum.cmd import docker
+docker = plumbum.cmd.docker
 
 
 def _docker_image(name):

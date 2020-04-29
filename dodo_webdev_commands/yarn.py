@@ -6,7 +6,7 @@ def _args():
     Dodo.parser.add_argument('--name')
     args = Dodo.parse_args()
     args.yarn = 'yarn'
-    args.cwd = Dodo.get_config('/WEBPACK/webpack_dir')
+    args.cwd = Dodo.get_config('/NODE/cwd')
     return args
 
 

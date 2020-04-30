@@ -1,5 +1,11 @@
 # Version history
 
+## 0.19.0
+
+- Fix: Use /NODE/cwd in dodo yarn
+- Fix: Use dodo_commands.dependencies.get
+- Fix: Use /DOCKER_IMAGES
+
 ## 0.18.0
 
 - Remove obsolete commands, prefer Makefiles

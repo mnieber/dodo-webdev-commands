@@ -8,7 +8,7 @@ from dodo_docker_commands.decorators.docker import invert_path
 def _args():
     Dodo.parser.description = "Runs make"
 
-    Dodo.parser.add_argument("what", nargs="?")
+    Dodo.parser.add_argument("make_args", nargs="*")
     Dodo.parser.add_argument("--cat", action="store_true")
     Dodo.parser.add_argument("--edit", action="store_true")
 
@@ -37,4 +37,4 @@ if Dodo.is_main(__name__, safe=True):
             Dodo.run([args.editor, args.file], cwd=invert_path(args.cwd))
     else:
         file_args = ["-f", args.file] if args.file != "Makefile" else []
-        Dodo.run(["make", *file_args, args.what], cwd=args.cwd)
+        Dodo.run(["make", *file_args, *args.make_args], cwd=args.cwd)

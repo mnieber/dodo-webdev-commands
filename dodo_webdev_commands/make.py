@@ -1,14 +1,14 @@
 from dodo_commands import CommandError, DecoratorScope, Dodo
 from dodo_commands.framework.global_config import (global_config_get,
                                                    load_global_config_parser)
-
+from dodo_commands.framework.util import to_arg_list
 from dodo_docker_commands.decorators.docker import invert_path
 
 
 def _args():
     Dodo.parser.description = "Runs make"
 
-    Dodo.parser.add_argument("make_args", nargs="*")
+    Dodo.parser.add_argument("make_args", nargs="?")
     Dodo.parser.add_argument("--cat", action="store_true")
     Dodo.parser.add_argument("--edit", action="store_true")
 
@@ -37,4 +37,4 @@ if Dodo.is_main(__name__, safe=True):
             Dodo.run([args.editor, args.file], cwd=invert_path(args.cwd))
     else:
         file_args = ["-f", args.file] if args.file != "Makefile" else []
-        Dodo.run(["make", *file_args, *args.make_args], cwd=args.cwd)
+        Dodo.run(["make", *file_args, *to_arg_list(args.make_args)], cwd=args.cwd)

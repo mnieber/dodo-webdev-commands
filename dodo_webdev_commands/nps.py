@@ -1,7 +1,7 @@
 from dodo_commands import CommandError, DecoratorScope, Dodo
 from dodo_commands.framework.global_config import (global_config_get,
                                                    load_global_config_parser)
-
+from dodo_commands.framework.util import to_arg_list
 from dodo_docker_commands.decorators.docker import invert_path
 
 
@@ -9,7 +9,7 @@ def _args():
     Dodo.parser.description = "Runs nps"
     Dodo.parser.add_argument("--cat", action="store_true")
     Dodo.parser.add_argument("--edit", action="store_true")
-    Dodo.parser.add_argument("nps_args", nargs="*")
+    Dodo.parser.add_argument("nps_args", nargs="?")
 
     args = Dodo.parse_args()
     args.cwd = Dodo.get_config("/NODE/cwd")
@@ -17,10 +17,6 @@ def _args():
 
     global_config = load_global_config_parser()
     args.editor = global_config_get(global_config, "settings", "editor")
-
-    # Raise an error if something is not right
-    if False:
-        raise CommandError("Oops")
 
     return args
 
@@ -35,4 +31,4 @@ if Dodo.is_main(__name__, safe=True):
         with DecoratorScope("docker", remove=True):
             Dodo.run([args.editor, "package-scripts.js"], cwd=invert_path(args.cwd))
     else:
-        Dodo.run([args.nps, *args.nps_args], cwd=args.cwd)
+        Dodo.run([args.nps, *to_arg_list(args.nps_args)], cwd=args.cwd)

@@ -1,5 +1,12 @@
 # Version history
 
+## 0.20.0
+
+- Update command signatures
+- Add new commands and remove install-packages
+- Fix: make_args in make.py
+- Remove --cov from pytest
+
 ## 0.19.0
 
 - Fix: Use /NODE/cwd in dodo yarn

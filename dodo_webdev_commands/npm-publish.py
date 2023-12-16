@@ -53,6 +53,6 @@ if Dodo.is_main(__name__, safe=True):
         dist_dir = os.path.join(args.npm_dir, src_sub_dir, "dist")
         Dodo.run(["rm", "-rf", "./dist"], cwd=src_dir)
         Dodo.run(["./node_modules/.bin/tsc", "--outDir", "dist"], cwd=src_dir)
-        Dodo.run(["yarn", "version", "--patch"], cwd=src_dir)
+        # Dodo.run(["yarn", "version", "--patch"], cwd=src_dir)
         Dodo.run(["cp", "LICENSE", "package.json", "README.md", "dist"], cwd=src_dir)
         Dodo.run(["npm", "publish"], cwd=dist_dir)

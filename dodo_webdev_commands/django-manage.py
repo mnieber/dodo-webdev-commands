@@ -7,11 +7,12 @@ def _args():
     Dodo.parser.add_argument(
         "--name",
     )
-    Dodo.parser.add_argument("manage_args", nargs="?")
+    Dodo.parser.add_argument("cmd_args", nargs="?")
     args = Dodo.parse_args()
     args.python = Dodo.get_config("/DJANGO/python")
     args.cwd = Dodo.get_config("/DJANGO/cwd")
     args.manage_py = Dodo.get_config("/DJANGO/manage_py", "manage.py")
+    args.manage_args = Dodo.get_config("/DJANGO/args", [])
     return args
 
 
@@ -23,6 +24,11 @@ if Dodo.is_main(__name__):
         ).setdefault("name", args.name)
 
     Dodo.run(
-        [*to_arg_list(args.python), args.manage_py, *to_arg_list(args.manage_args)],
+        [
+            *to_arg_list(args.python),
+            args.manage_py,
+            *to_arg_list(args.manage_args),
+            *to_arg_list(args.cmd_args),
+        ],
         cwd=args.cwd,
     )

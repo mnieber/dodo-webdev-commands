@@ -39,4 +39,6 @@ if Dodo.is_main(__name__):
             *to_arg_list(args.pytest_args),
         ]
 
+        if args.html_report:
+            Dodo.run(["rm", args.html_report], cwd=args.cwd)
         Dodo.run(run_args, cwd=args.cwd)

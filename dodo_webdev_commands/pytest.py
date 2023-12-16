@@ -6,7 +6,6 @@ from dodo_docker_commands.decorators.docker import invert_path
 
 def _args():
     Dodo.parser.add_argument("pytest_args", nargs="?")
-    Dodo.parser.add_argument("--show-report", action="store_true")
     args = Dodo.parse_args()
     args.no_capture = not Dodo.get_config("/PYTEST/capture", True)
     args.reuse_db = Dodo.get_config("/PYTEST/reuse_db", False)

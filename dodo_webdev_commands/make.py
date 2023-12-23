@@ -1,6 +1,8 @@
 from dodo_commands import CommandError, DecoratorScope, Dodo
-from dodo_commands.framework.global_config import (global_config_get,
-                                                   load_global_config_parser)
+from dodo_commands.framework.global_config import (
+    global_config_get,
+    load_global_config_parser,
+)
 from dodo_commands.framework.util import to_arg_list
 from dodo_docker_commands.decorators.docker import invert_path
 
@@ -13,7 +15,7 @@ def _args():
     Dodo.parser.add_argument("--edit", action="store_true")
 
     args = Dodo.parse_args()
-    args.cwd = Dodo.get_config("/MAKE/cwd")
+    args.cwd = Dodo.get_config("/MAKE/cwd", None)
     args.file = Dodo.get_config("/MAKE/file", "Makefile")
 
     global_config = load_global_config_parser()

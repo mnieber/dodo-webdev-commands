@@ -7,7 +7,7 @@ def _args():
     Dodo.parser.add_argument(
         "--name",
     )
-    Dodo.parser.add_argument("cmd_args", nargs="?")
+    Dodo.parser.add_argument("cmd_args", nargs="*")
     args = Dodo.parse_args()
     args.python = Dodo.get_config("/DJANGO/python")
     args.cwd = Dodo.get_config("/DJANGO/cwd")

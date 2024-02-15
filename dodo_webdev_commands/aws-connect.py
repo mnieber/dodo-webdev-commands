@@ -21,8 +21,14 @@ if Dodo.is_main(__name__, safe=True):
     profiles = Dodo.get_config("/AWS/profiles", {})
     profile = profiles[args.profile]
 
+    Dodo.run(["pass", "landler/aws"])
     Dodo.run(["aws", "configure", "sso", f"--profile={profile}"])
     Dodo.run(["aws", "sts", "get-caller-identity", f"--profile={profile}"])
+
+    for key, value in dict(AWS_PROFILE=profile).items():
+        Dodo.get_container().command_line.env_vars_from_input_args.append(
+            f"{key}={value}"
+        )
 
     print("Connecting to tailscale")
     Dodo.run(["sudo", "tailscale", "up", "--accept-dns", "--accept-routes"])
@@ -35,5 +41,4 @@ if Dodo.is_main(__name__, safe=True):
             f"--name={profile}-eks",
             f"--alias={profile}",
         ],
-        variable_map=dict(AWS_PROFILE=profile),
     )

@@ -6,7 +6,9 @@ from dodo_commands.framework.util import to_arg_list
 def _args():
     Dodo.parser.add_argument("pytest_args", nargs="*")
     args = Dodo.parse_args()
-    args.no_capture = not Dodo.get_config("/PYTEST/capture", True)
+
+    has_dash_k = [x for x in to_arg_list(args.pytest_args) if x.startswith("-k")]
+    args.no_capture = has_dash_k or not Dodo.get_config("/PYTEST/capture", True)
     args.reuse_db = Dodo.get_config("/PYTEST/reuse_db", False)
     args.html_report = Dodo.get_config("/PYTEST/html_report", None)
     args.test_file = Dodo.get_config("/PYTEST/test_file", None)
